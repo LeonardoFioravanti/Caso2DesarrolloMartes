@@ -1,0 +1,63 @@
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS cine_teatro;
+USE cine_teatro;
+
+-- Tabla de películas/obras
+CREATE TABLE pelicula (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descripcion TEXT,
+    duracion INT,
+    genero VARCHAR(100),
+    trailerUrl VARCHAR(255),
+    imagenPortada VARCHAR(255)
+);
+
+-- Tabla de funciones/proyecciones
+CREATE TABLE funcion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    pelicula_id INT NOT NULL,
+    fecha DATE NOT NULL,
+    hora TIME NOT NULL,
+    sala VARCHAR(50),
+    precio DECIMAL(10,2),
+    FOREIGN KEY (pelicula_id) REFERENCES pelicula(id)
+);
+
+-- Tabla de usuarios
+CREATE TABLE usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    rol ENUM('ADMIN', 'USER') DEFAULT 'USER'
+);
+
+-- Tabla de reservas
+CREATE TABLE reserva (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    funcion_id INT NOT NULL,
+    cantidad_entradas INT NOT NULL,
+    fecha_reserva TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuario(id),
+    FOREIGN KEY (funcion_id) REFERENCES funcion(id)
+);
+
+-- Modificaciones posteriores
+ALTER TABLE reserva MODIFY usuario_id INT NULL;
+ALTER TABLE reserva DROP FOREIGN KEY reserva_ibfk_2;
+ALTER TABLE reserva DROP COLUMN funcion_id;
+
+USE cine_teatro;
+
+-- Películas de ejemplo
+INSERT INTO pelicula (titulo, descripcion, duracion, genero, trailerUrl, imagenPortada) VALUES
+('Batman', 'El caballero oscuro protege Gotham de nuevos villanos.', 120, 'Acción', 'https://youtu.be/fWQrd6cwJ0A', 'batman.jpg'),
+('El Señor de los Anillos', 'Un hobbit emprende un viaje para destruir el anillo único.', 180, 'Aventura', 'https://youtu.be/V75dMMIW2B4', 'lotr.jpg'),
+('La La Land', 'Dos jóvenes artistas persiguen sus sueños en Los Ángeles.', 128, 'Musical', 'https://youtu.be/0pdqf4P9MB8', 'lalaland.jpg'),
+('Jurassic Park', 'Un parque temático con dinosaurios clonados se vuelve peligroso.', 127, 'Ciencia ficción', 'https://youtu.be/QWBKEmWWL38', 'jurassicpark.jpg'),
+('Titanic', 'Un romance imposible a bordo del famoso transatlántico.', 195, 'Romance', 'https://youtu.be/kVrqfYjkTdQ', 'titanic.jpg'),
+('Toy Story', 'Juguetes cobran vida cuando los humanos no miran.', 81, 'Animación', 'https://youtu.be/KYz2wyBy3kc', 'toystory.jpg'),
+('Inception', 'Un ladrón especializado en sueños se enfrenta a un desafío imposible.', 148, 'Suspenso', 'https://youtu.be/YoHD9XEInc0', 'inception.jpg'),
+('Frozen', 'Una princesa debe controlar sus poderes de hielo mientras busca a su hermana.', 102, 'Animación', 'https://youtu.be/TbQm5doF_Uc', 'frozen.jpg');
