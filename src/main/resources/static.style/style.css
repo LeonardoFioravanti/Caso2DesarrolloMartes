@@ -1,0 +1,46 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #000000; /* fondo negro */
+    color: #f1f1f1; /* texto claro */
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+/* Navbar rojo */
+.navbar {
+    background-color: #ff0000 !important; /* rojo intenso */
+}
+
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: #cccccc !important; /* gris claro al pasar el mouse */
+}
+
+footer {
+    font-size: 0.9rem;
+    color: #ffffff; /* texto blanco */
+    background-color: #000000; /* fondo negro */
+}
+
+.btn {
+    border-radius: 10px;
+}
+
+/* Tarjetas: cabecera roja con texto blanco */
+.card-header {
+    background-color: #ff0000;
+    color: #ffffff;
+}
+
+/* Tablas: encabezado negro con texto rojo */
+.table thead {
+    background-color: #1f1f1f;
+    color: #ff0000;
+}

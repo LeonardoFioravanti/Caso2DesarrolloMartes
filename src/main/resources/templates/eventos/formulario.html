@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}"></head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+
+<div class="container mt-4">
+    <h2 th:text="${evento.id != null} ? 'Editar Evento' : 'Nuevo Evento'"></h2>
+    <form th:action="@{/eventos/guardar}" th:object="${evento}" method="post">
+        <input type="hidden" th:field="*{id}" />
+        <div class="mb-3">
+            <label>Nombre</label>
+            <input type="text" th:field="*{nombre}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Descripción</label>
+            <textarea th:field="*{descripcion}" class="form-control" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label>Tipo</label>
+            <input type="text" th:field="*{tipo}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Fecha Inicio</label>
+            <input type="date" th:field="*{fechaInicio}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Fecha Fin</label>
+            <input type="date" th:field="*{fechaFin}" class="form-control" required />
+        </div>
+        <div class="mb-3">
+            <label>Capacidad</label>
+            <input type="number" th:field="*{capacidad}" class="form-control" required />
+        </div>
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/eventos}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>

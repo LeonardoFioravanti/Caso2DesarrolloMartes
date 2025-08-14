@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/plantilla :: head"></head>
+<body>
+<header th:replace="layout/plantilla :: header"></header>
+
+<div class="container mt-4">
+    <h2 class="text-info">Listado de Reservas</h2>
+    <a th:href="@{/reservas/nueva}" class="btn btn-success mb-3">Nueva Reserva</a>
+    <table class="table table-striped table-bordered">
+        <thead class="table-info">
+            <tr>
+                <th>ID</th>
+                <th>Cliente</th>
+                <th>Cantidad</th>
+                <th>Película</th>
+                <th>Fecha Reserva</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="reserva : ${reservas}">
+                <td th:text="${reserva.id}"></td>
+                <td th:text="${reserva.nombreCliente}"></td>
+                <td th:text="${reserva.cantidadEntradas}"></td>
+                <td th:text="${reserva.pelicula.titulo}"></td>
+                <td th:text="${#dates.format(reserva.fechaReserva, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/reservas/editar/{id}(id=${reserva.id})}" class="btn btn-primary btn-sm">Editar</a>
+                    <a th:href="@{/reservas/eliminar/{id}(id=${reserva.id})}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="layout/plantilla :: footer"></footer>
+</body>
+</html>

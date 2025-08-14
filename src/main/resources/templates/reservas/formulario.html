@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/plantilla :: head"></head>
+<body>
+<header th:replace="layout/plantilla :: header"></header>
+
+<div class="container mt-4">
+    <h2 class="text-info" th:text="${reserva.id} != null ? 'Editar Reserva' : 'Nueva Reserva'"></h2>
+
+    <form th:action="@{/reservas/guardar}" th:object="${reserva}" method="post">
+        <div class="mb-3">
+            <label for="nombreCliente" class="form-label">Nombre Cliente</label>
+            <input type="text" th:field="*{nombreCliente}" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="cantidadEntradas" class="form-label">Cantidad Entradas</label>
+            <input type="number" th:field="*{cantidadEntradas}" class="form-control" min="1" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="pelicula" class="form-label">Película</label>
+            <select class="form-select" name="peliculaId" required>
+                <option th:each="pelicula : ${peliculas}" 
+                        th:value="${pelicula.id}" 
+                        th:text="${pelicula.titulo}"></option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/reservas}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+<footer th:replace="layout/plantilla :: footer"></footer>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{layout/plantilla :: head}">
+    <title>Farmacia</title>
+</head>
+<body>
+
+    <!-- Fragmento: Botón para agregar -->
+    <section th:fragment="botonesAgregar" class="py-4 mb-4 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">   
+                    <button 
+                        type="button" 
+                        class="btn btn-primary btn-block" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#agregarCategoria">
+                        <i class="fas fa-plus"></i> Agregar Medicamento
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fragmento: Formulario para agregar -->
+    <section th:fragment="agregarCategoria">
+        <div id="agregarCategoria" class="modal fade" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header bg-info text-white">
+                        <h5 class="modal-title">Agregar Medicamento</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> 
+                    <form th:action="@{/categoria/guardar}" th:object="${categoria}" method="POST" class="was-validated">
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" required />
+                            </div>
+                            <div class="mb-3">
+                                <label for="descripcion">Descripción</label>
+                                <input type="text" class="form-control" name="descripcion" required />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- Fragmento: Listado de categorías con tarjetas -->
+<section th:fragment="listadoCategorias" id="categorias">
+    <div class="container">
+        <h3 class="text-center mb-4">Explora nuestros medicamentos</h3>
+
+        <div class="row" th:if="${categorias != null and !categorias.empty}">
+            <div class="col-md-4 mb-4" th:each="categoria : ${categorias}">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">[[${categoria.nombre}]]</h5>
+                        <p class="card-text">[[${categoria.descripcion}]]</p>
+                        <div class="d-flex justify-content-between">
+                            <a th:href="@{/categoria/eliminar/}+${categoria.id}" class="btn btn-sm btn-danger">
+                                <i class="fas fa-trash"></i> Eliminar
+                            </a>
+                            <a th:href="@{/categoria/modificar/}+${categoria.id}" class="btn btn-sm btn-success">
+                                <i class="fas fa-edit"></i> Editar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center p-3" th:if="${categorias == null or categorias.empty}">
+            <span class="text-muted">No hay categorías registradas aún.</span>
+        </div>
+    </div>
+</section>

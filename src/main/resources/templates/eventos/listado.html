@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout/plantilla :: head}"></head>
+<body>
+<header th:replace="~{layout/plantilla :: header}"></header>
+
+<div class="container mt-4">
+    <h2>Listado de Eventos</h2>
+    <a th:href="@{/eventos/nuevo}" class="btn btn-primary mb-3">Nuevo Evento</a>
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Capacidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="evento : ${eventos}">
+                <td th:text="${evento.nombre}"></td>
+                <td th:text="${evento.tipo}"></td>
+                <td th:text="${evento.fechaInicio}"></td>
+                <td th:text="${evento.fechaFin}"></td>
+                <td th:text="${evento.capacidad}"></td>
+                <td>
+                    <a th:href="@{/eventos/editar/{id}(id=${evento.id})}" class="btn btn-success btn-sm">Editar</a>
+                    <a th:href="@{/eventos/eliminar/{id}(id=${evento.id})}" class="btn btn-danger btn-sm">Eliminar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<footer th:replace="~{layout/plantilla :: footer}"></footer>
+</body>
+</html>
